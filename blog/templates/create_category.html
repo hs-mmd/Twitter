@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %} creat category {% endblock%}
+
+{% block content %} 
+<h1> Creat Category </h1>
+
+        <div class="container d-flex justify-content-center">
+            <div class="col-md-8">    
+                
+                {% if user.is_authenticated %}
+                    <form method='post'  class="form-control">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button class="btn btn-success"> Create </button>
+                    </form>
+                {% else %}
+                <h3> You must be <a href="{% url 'login_page'%}">Login</a> ... </h3> 
+                {% endif %}
+
+            </div>
+        </div>
+
+
+{% endblock%}

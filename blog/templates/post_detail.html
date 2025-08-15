@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %} post_detail {% endblock%}
+
+{% block content %} 
+
+<h1> {{post.title}} </h1>
+<small> 
+    By : {{post.author}}
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            <a href="{% url 'update_post' post.pk %}"> Edit </a> -
+            <a href="{% url 'delete_post' post.pk %}"  style='color: red'> Delete </a>
+            <br><br>
+            {% if not post.is_archived %}
+                <form method="post" action="{% url 'post_archive' post.pk %}">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-warning">Archive</button>
+                </form>
+            {% else %}
+                <form method="post" action="{% url 'post_unarchive' post.pk %}">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-success">Unarchive</button>
+                </form>
+                
+            {% endif %}
+        {% endif %}    
+
+    {% endif %}  
+
+   
+  
+
+</small> <br><br>
+
+{% if post.image %}
+    <img src="{{ post.image.url }}" style="width: 200px">
+{%endif%}
+<br><br>
+
+{{post.body|safe}}<br><br>
+    {% if user.is_authenticated %}
+        <form action="{% url 'like_post' post.pk  %}"  method='post'>
+        {% csrf_token %}
+        {% if liked %}
+            <button  type='submit'  class="btn btn-danger"> dislike </button> - {{total_likes}}
+        {% else %}
+            <button  type='submit'  class="btn btn-primary"> like </button> - {{total_likes}}
+        {% endif %}    
+   
+        </form>
+    {% endif %}    
+
+<br><hr>
+<h1> Comments ... </h1>
+{% if not post.comments.all %}
+        No Comment Yet ...
+        <a href="{% url 'create_comment'  post.pk %}" style="text-decoration: none">Add Comment</a>
+{% else %}
+        <a href="{% url 'create_comment'  post.pk %}" style="text-decoration: none">Add Comment</a>
+        {% for comment in post.comments.all %}
+         <li>
+            <strong> {{comment.name}} - {{ comment.created_at }} </strong><br>
+            {{comment.body}}
+            <br><br>
+         </li>
+        {% endfor %}
+{% endif %} 
+
+
+
+
+
+{% endblock%}

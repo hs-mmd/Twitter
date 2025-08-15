@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+
+{% block content %}
+  <h1>Users</h1>
+
+  <form method="get" class="mb-4">
+    <div class="input-group">
+      <input 
+        type="text" 
+        name="q" 
+        value="{{ q }}" 
+        class="form-control" 
+        placeholder="Search by username…"
+      >
+      <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+  </form>
+
+  {% if userslist %}
+    {% for user in userslist %}
+      <h4>
+        <a 
+          href="{% url 'profile_page' user.profile.id %}" 
+          class="text-decoration-none"
+        >
+          {{ user.username }}
+        </a>
+      </h4>
+    {% endfor %}
+  {% else %}
+    <p>No users found.</p>
+  {% endif %}
+
+{% endblock %}

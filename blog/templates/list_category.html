@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} categories {% endblock%}
+
+{% block content %} 
+<h1> categories </h1>
+
+      {% for category in list_category %}
+            <h4> <a href="{% url 'category'  category|slugify %}" style="text-decoration: none">{{category}}</a> </h4>
+
+            <li class="list-group-item d-flex justify-content-between">
+            {% if category.pk in subscribed_ids %}
+                  <form method="post" action="{% url 'unsubscribe_category' category.pk %}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-success">Following</button>
+                  </form>
+            {% else %}
+                  <form method="post" action="{% url 'subscribe_category' category.pk %}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-outline-primary">Follow</button>
+                  </form>
+            {% endif %}
+            </li>
+
+      {% endfor %}
+
+
+{% endblock%}
