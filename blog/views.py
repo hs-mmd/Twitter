@@ -84,10 +84,10 @@ class ListCategoryView(ListView):
         context['subscribed_ids'] = set(subscribed_ids)
         return context
     
-def category_view(requset, cat):
+def category_view(request, cat):
     category_posts = Post.objects.filter(category__name=cat.replace('-',''))
     context = {'cat':cat.replace('-',''), 'category_posts':category_posts}
-    return render(request=requset, template_name='category.html', context=context)
+    return render(request=request, template_name='category.html', context=context)
 
 class CreateComment(CreateView):
     model = Comment

@@ -1,0 +1,24 @@
+venv/
+
+db.sqlite3
+
+HW-L05-01-Django Twitter.pdf
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+Thumbs.db
+Desktop.ini
+
+media/
+
+.vscode/
+.idea/
+
+media/*
+
+.vscode/
+
+*/migrations/__pycache__/
